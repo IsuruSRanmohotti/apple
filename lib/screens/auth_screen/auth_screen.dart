@@ -1,9 +1,20 @@
+import 'package:apple/screens/home/home_page/home_page.dart';
+import 'package:apple/utils/color_utils.dart';
+import 'package:apple/utils/custom_navigator.dart';
 import 'package:flutter/material.dart';
 
+import '../../components/custom_button.dart';
 import '../../components/custom_text_field.dart';
 
-class AuthScreen extends StatelessWidget {
+class AuthScreen extends StatefulWidget {
   const AuthScreen({super.key});
+
+  @override
+  State<AuthScreen> createState() => _AuthScreenState();
+}
+
+class _AuthScreenState extends State<AuthScreen> {
+  String type = 'signup';
 
   @override
   Widget build(BuildContext context) {
@@ -36,23 +47,41 @@ class AuthScreen extends StatelessWidget {
                             height: 60,
                           ),
                         ),
-                        const Text(
-                          'Create Your Account',
-                          style: TextStyle(
+                        Text(
+                          type == 'signup'
+                              ? 'Create Your Account'
+                              : type == 'signin'
+                                  ? 'Signin With Your Account'
+                                  : 'Forgot Your Password?',
+                          style: const TextStyle(
                               color: Colors.white,
                               fontSize: 24,
                               fontWeight: FontWeight.bold),
                         ),
                         Text(
-                          'Create Your User Account With Apple',
+                          type == 'signup'
+                              ? 'Create Your User Account With Apple'
+                              : type == 'signin'
+                                  ? 'Connect with your user account'
+                                  : 'Please Enter your email address',
                           style: TextStyle(
                               fontSize: 15, color: Colors.grey.shade300),
                         )
                       ],
                     ),
                   ),
-                  const BackButton(
+                  BackButton(
                     color: Colors.white,
+                    onPressed: () {
+                      setState(() {
+                        if (type == 'signup') {
+                        } else if (type == 'signin') {
+                          type = 'signup';
+                        } else {
+                          type = 'signin';
+                        }
+                      });
+                    },
                   )
                 ],
               ),
@@ -68,65 +97,91 @@ class AuthScreen extends StatelessWidget {
                 const SizedBox(
                   height: 10,
                 ),
-                const CustomTextField(
-                  hint: 'User Name',
-                  prefixIcon: Icons.person,
-                ),
+                type == 'signup'
+                    ? const CustomTextField(
+                        hint: 'User Name',
+                        prefixIcon: Icons.person,
+                      )
+                    : const SizedBox(),
                 const CustomTextField(
                   hint: 'Email',
                   prefixIcon: Icons.email_rounded,
                 ),
-                const CustomTextField(
-                  hint: 'Password',
-                  prefixIcon: Icons.password_rounded,
-                  isPassword: true,
+                type == 'forgot'
+                    ? const SizedBox()
+                    : const CustomTextField(
+                        hint: 'Password',
+                        prefixIcon: Icons.password_rounded,
+                        isPassword: true,
+                      ),
+                type == 'signup'
+                    ? const CustomTextField(
+                        hint: 'Confirm Password',
+                        prefixIcon: Icons.password_rounded,
+                        isPassword: true,
+                      )
+                    : const SizedBox(),
+                type == 'signin'
+                    ? Align(
+                        alignment: Alignment.centerRight,
+                        child: TextButton(
+                          onPressed: () {
+                            setState(() {
+                              type = 'forgot';
+                            });
+                          },
+                          child: Text(
+                            'Forgot your password?',
+                            style: TextStyle(
+                                color: CustomColors.primaryColor,
+                                fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                      )
+                    : const SizedBox(),
+                const SizedBox(
+                  height: 10,
                 ),
-                const CustomTextField(
-                  hint: 'Confirm Password',
-                  prefixIcon: Icons.password_rounded,
-                  isPassword: true,
+                CustomButton(
+                  size: size,
+                  text: type == 'signup'
+                      ? 'Create Account'
+                      : type == 'signin'
+                          ? 'Sign In'
+                          : 'Send Password Reset Email',
+                  onTap: () {
+                    CustomNavigator.push(context, const HomePage());
+                  },
                 ),
                 const SizedBox(
                   height: 10,
                 ),
-                Container(
-                  width: size.width,
-                  height: 55,
-                  decoration: BoxDecoration(
-                      color: const Color(0xFF1A2285),
-                      borderRadius: BorderRadius.circular(50)),
-                  child: const Center(
-                      child: Text(
-                    'Create Account',
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 18),
-                  )),
-                ),
+                type == 'forgot'
+                    ? const SizedBox()
+                    : Text(type == 'signup'
+                        ? "Already you have an account?"
+                        : 'You Don\'t Have An Account'),
                 const SizedBox(
                   height: 10,
                 ),
-                const Text("Already you have an account?"),
-                const SizedBox(
-                  height: 10,
-                ),
-                Container(
-                  width: size.width,
-                  height: 55,
-                  decoration: BoxDecoration(
-                      color: Colors.white,
-                      border:
-                          Border.all(color: const Color(0xFF1A2285), width: 1),
-                      borderRadius: BorderRadius.circular(50)),
-                  child: const Center(
-                      child: Text(
-                    'Sign In',
-                    style: TextStyle(
-                        color: Color(0xFF1A2285),
-                        fontWeight: FontWeight.bold,
-                        fontSize: 18),
-                  )),
+                CustomButton(
+                  size: size,
+                  text: type == 'signup'
+                      ? 'Sign In'
+                      : type == 'signin'
+                          ? 'Create Account'
+                          : 'Sign In',
+                  bgColor: Colors.white,
+                  fontColor: CustomColors.primaryColor,
+                  onTap: () {
+                    setState(() {
+                      type = type == 'signup'
+                          ? 'signin'
+                          : type == 'signin'
+                              ? 'signup'
+                              : 'signin';
+                    });
+                  },
                 )
               ],
             ),
