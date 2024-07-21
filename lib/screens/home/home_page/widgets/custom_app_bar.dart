@@ -1,3 +1,4 @@
+import 'package:apple/controller/auth_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -11,8 +12,7 @@ class CustomAppBar extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(5),
       decoration: BoxDecoration(
-          color: Colors.grey,
-          borderRadius: BorderRadius.circular(20)),
+          color: Colors.grey, borderRadius: BorderRadius.circular(20)),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -23,25 +23,23 @@ class CustomAppBar extends StatelessWidget {
               color: Colors.white,
             ),
             style: ButtonStyle(
-                backgroundColor:
-                    WidgetStatePropertyAll(Colors.grey.shade800)),
+                backgroundColor: WidgetStatePropertyAll(Colors.grey.shade800)),
           ),
           const Text(
             'Apple Store',
             style: TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.bold,
-                fontSize: 25),
+                color: Colors.white, fontWeight: FontWeight.bold, fontSize: 25),
           ),
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              AuthController().signOutUser();
+            },
             icon: const Icon(
               Icons.logout,
               color: Colors.white,
             ),
             style: ButtonStyle(
-                backgroundColor:
-                    WidgetStatePropertyAll(Colors.grey.shade800)),
+                backgroundColor: WidgetStatePropertyAll(Colors.grey.shade800)),
           ),
         ],
       ),

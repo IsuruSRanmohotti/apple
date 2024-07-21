@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "190673551377",
+    "project_id": "apple-store-sl",
+    "storage_bucket": "apple-store-sl.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:190673551377:android:1852b8c4b3f75bcc14f1b0",
+        "android_client_info": {
+          "package_name": "lk.ce.apple"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAmAI6jRVDA5lrAyuIBe4jXubKaunYE5Ag"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

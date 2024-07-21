@@ -5,11 +5,12 @@ class CustomTextField extends StatefulWidget {
       {super.key,
       required this.hint,
       this.prefixIcon,
-      this.isPassword = false});
+      this.isPassword = false,this.controller});
 
   final String hint;
   final IconData? prefixIcon;
   final bool isPassword;
+  final TextEditingController? controller;
 
   @override
   State<CustomTextField> createState() => _CustomTextFieldState();
@@ -23,6 +24,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: TextField(
+        controller: widget.controller,
         obscureText: widget.isPassword
             ? isVisible
                 ? true
